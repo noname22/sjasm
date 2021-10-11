@@ -33,7 +33,7 @@ vector<Output*> output;
 int onr;
 
 int Rout::pool(int d) {
-  for (int i=0;i!=_pool.size();++i) if (_pool[i]==d) return _pooladres+4*i;
+  for (int i=0;i!=(int)_pool.size();++i) if (_pool[i]==d) return _pooladres+4*i;
   _pool.push_back(d);
   return _pooladres+4*(int)_pool.size()-4;
 }
@@ -356,7 +356,7 @@ void Output::dump(StringList &sl) {
   sl.push_back("");
   sl.push_back(" Output: "+_filename);
   sl.push_back("-------------------------------------------------");
-  for(int i=0; i!=_page.size(); ++i) 
+  for(int i=0; i!=(int)_page.size(); ++i) 
     if (_page[i]) { 
       sl.push_back(""); sl.push_back(" Page: "+tohex(i,2));
       _page[i]->dump(sl);
@@ -398,13 +398,13 @@ void Output::sort() {
 
   if (_page.empty()) { defpage(0,output[onr]->getorg(),-1); }  // size???
 
-  for (i=1; i!=_page.size(); ++i) {
+  for (i=1; i!=(int)_page.size(); ++i) {
     int j=i-1;
     while (j && !_page[j]) --j;
     if (_page[i] && _page[j]) _page[i]->setorg(_page[j]->getorg()+_page[j]->getsize());
   }
 
-  for (i=0; i!=_rout.size(); ++i)
+  for (i=0; i!=(int)_rout.size(); ++i)
     if (_rout[i] && _rout[i]->makepart(overlay,pm,am,npage,nadres,nlen,nalign,nalignmode,nmultipart))
       if (overlay) oparts.push_back(Part(i,npage,nadres,nlen,nalign,nalignmode,_rout[i],0));
       else parts[pm][am].push_back(Part(i,npage,nadres,nlen,nalign,nalignmode,_rout[i],nmultipart));
@@ -427,7 +427,7 @@ void Output::sort() {
     for (pm=0; pm!=2; ++pm) 
       p.splice(p.end(),parts[pm][am]);
 
-  for (i=0; i!=_page.size(); ++i) if (_page[i]) _page[i]->reset();
+  for (i=0; i!=(int)_page.size(); ++i) if (_page[i]) _page[i]->reset();
 
   list<Part>::iterator ip=p.begin();
   while (ip!=p.end()) {
@@ -496,7 +496,7 @@ void Output::sort() {
     ++ip;
   }
 
-  for(int i=0; i!=_page.size(); ++i) if (_page[i]) _page[i]->checkparts();
+  for(int i=0; i!=(int)_page.size(); ++i) if (_page[i]) _page[i]->checkparts();
 }
 
 void Output::save() {
@@ -513,7 +513,7 @@ void Output::save() {
   {
     WriteFile file(_filename,_mode);
     if (file.ok()) {
-      for(int i=0; i!=_page.size(); ++i) 
+      for(int i=0; i!=(int)_page.size(); ++i) 
         if (_page[i]) _page[i]->save(file); 
         else if (options.allpages) error("Page does not exist",tostr(i));
     }
@@ -521,7 +521,7 @@ void Output::save() {
 
   {
     WriteFile file(_filename,UPDATE);
-    if (file.ok()) for(int i=0; i!=_page.size(); ++i) if (_page[i]) _page[i]->saveoverlay(file);
+    if (file.ok()) for(int i=0; i!=(int)_page.size(); ++i) if (_page[i]) _page[i]->saveoverlay(file);
   }
 }
 
@@ -552,26 +552,26 @@ void Output::reset() {
   //for (vector<Rout*>::iterator ip=_rout.begin(); ip!=_rout.end(); ++ip) _routlen.push_back((*ip)->getsize());
 
 
-  for(int i=0; i!=_rout.size(); ++i) if (_rout[i]) _rout[i]->reset();
-  for(int i=0; i!=_page.size(); ++i) if (_page[i]) _page[i]->reset();
+  for(int i=0; i!=(int)_rout.size(); ++i) if (_rout[i]) _rout[i]->reset();
+  for(int i=0; i!=(int)_page.size(); ++i) if (_page[i]) _page[i]->reset();
   _rn=0; _outp=0;
 }
 
 void resetoutput() {
-  for(int i=0; i!=output.size(); ++i) if (output[i]) output[i]->reset();
+  for(int i=0; i!=(int)output.size(); ++i) if (output[i]) output[i]->reset();
 }
 
 void dumpoutput(StringList &sl) {
   sl.push_back("");
-  for(int i=0; i!=output.size(); ++i) if (output[i]) output[i]->dump(sl);
+  for(int i=0; i!=(int)output.size(); ++i) if (output[i]) output[i]->dump(sl);
 }
 
 void sortoutput() {
-  for(int i=0; i!=output.size(); ++i) if (output[i]) output[i]->sort();
+  for(int i=0; i!=(int)output.size(); ++i) if (output[i]) output[i]->sort();
 }
 
 void saveoutput() {
-  for(int i=0; i!=output.size(); ++i) if (output[i]) output[i]->save();
+  for(int i=0; i!=(int)output.size(); ++i) if (output[i]) output[i]->save();
 }
 
 void setoutput(int nonr) {

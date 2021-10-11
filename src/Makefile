@@ -10,7 +10,7 @@ OBJECTS  = datadir.o datastructures.o directives.o errors.o expressions.o fileio
 
 BINDIR   = /usr/local/bin
 
-CXXFLAGS = -O2
+CXXFLAGS = -Wsign-compare -Wno-write-strings -fpermissive
 LDFLAGS  = 
 
 DEPDIR = .deps
@@ -20,7 +20,7 @@ all: $(TARGETS)
 
 sjasm$(EXTENSION): $(DEPDIR) $(OBJECTS)
 	g++ $(LDFLAGS) -o $@ $(OBJECTS) 
-	strip $@
+	#strip $@
 
 clean:
 	$(RM) $(OBJECTS) $(TARGETS)

@@ -107,7 +107,7 @@ void getoptions(char **&argv,int &i) {
 
 string makefilename(string &fn, string ext) {
   int p=(int)fn.find_last_of('.');
-  if (p==string::npos) return fn+ext;
+  if (p==(int)string::npos) return fn+ext;
   else return fn.substr(0,p)+ext;
 }
 

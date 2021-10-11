@@ -26,6 +26,8 @@
 
 // datastructures.h
 
+#include <cstring>
+
 const int FUNTABSIZE=255;
 
 typedef vector<int> IntList;

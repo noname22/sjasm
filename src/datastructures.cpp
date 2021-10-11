@@ -219,7 +219,7 @@ int DefineTable::exists(string name,int narg) {
     if (_deftab[htr]._name==name && !_deftab[htr]._used) {
       if (narg) {
        if (!_deftab[htr]._args.size()) return -1;
-       if (narg==_deftab[htr]._args.size()) return htr;
+       if (narg==(int)_deftab[htr]._args.size()) return htr;
       } else {
         if (_deftab[htr]._args.size()) return -1;
         return htr;
@@ -235,7 +235,7 @@ int DefineTable::exists(string name,int narg) {
     if (_deftab[htr]._name==name && _deftab[htr]._icase && !_deftab[htr]._used) {
       if (narg) {
        if (!_deftab[htr]._args.size()) return -1;
-       if (narg==_deftab[htr]._args.size()) return htr;
+       if (narg==(int)_deftab[htr]._args.size()) return htr;
       } else {
         if (_deftab[htr]._args.size()) return -1;
         return htr;
@@ -476,7 +476,7 @@ int MacroTable::emit(string &line, RawSource *rs, bool fun) {
   iStringList ia=args.begin();
   int defargtabpos=defargtab.getlocation();
   int macnumtabpos=macnumtab.getlocation();
-  for (i=0; i!=im->_namParam.size(); ++i) {
+  for (i=0; i!=(int)im->_namParam.size(); ++i) {
     if (ia==args.end()) {
       string a=im->_namDefaults[i];
       if (a=="\01") { a=" "; error("Parameter missing"); }
@@ -496,7 +496,7 @@ int MacroTable::emit(string &line, RawSource *rs, bool fun) {
     macnumtab.add(++anum,*ia);
     ++ia;
   }
-  for (i=0; i!=im->_numDefaults.size(); ++i) {
+  for (i=0; i!=(int)im->_numDefaults.size(); ++i) {
     if (ia==args.end()) {
       macnumtab.add(++anum,im->_numDefaults[i]);
     } else {

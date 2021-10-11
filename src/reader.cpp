@@ -76,9 +76,9 @@ string tolower(string b) {
   return bp;
 }
 
-inline void skipblanks(string &p) {
+void skipblanks(string &p) {
   int pos=(int)p.find_first_not_of(' ');
-  if (pos==string::npos) p.clear();
+  if (pos==(int)string::npos) p.clear();
   else p=p.substr(pos);
 }
 
@@ -99,9 +99,9 @@ Find fspacedot(" .");
 string getinstructionpart(string &p) {
   int pos=fspacedot.find(p),u=0;
   string d=p.substr(0,pos);
-  if (pos!=string::npos) p=p.substr(pos); else p.clear();
+  if (pos!=(int)string::npos) p=p.substr(pos); else p.clear();
   for (istring i=d.begin(); i!=d.end(); ++i) if ((*i)==toupper(*i)) ++u;
-  if (d.size()==u) return tolower(d);
+  if ((int)d.size()==u) return tolower(d);
   return d;
 }
 
@@ -118,7 +118,7 @@ string getid(string &p) {
   if (!isalpha(p[0]) && p[0]!='_') return "";
   int pos=fid.findnot(p);
   string d=p.substr(0,pos);
-  if (pos!=string::npos) p=p.substr(pos); else p.clear();
+  if (pos!=(int)string::npos) p=p.substr(pos); else p.clear();
   return d;
 }
 

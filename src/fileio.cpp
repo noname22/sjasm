@@ -48,7 +48,7 @@ string getpath(string &filename) {
   if (np.empty()) np=fileexists(listopt._path,filename);
   if (np.empty()) { np=listopt._path; if (!np.empty() && np[np.size()-1]!=SLASH) np+=SLASH; np+=filename; }
   int pos=(int)np.find_last_of(SLASH);
-  if (pos==string::npos) { listopt._path.clear(); return filename; }
+  if (pos==(int)string::npos) { listopt._path.clear(); return filename; }
   listopt._path=np.substr(0,pos);
   return np;
 }
@@ -58,16 +58,16 @@ string getfilename(string &p) {
   string res;
   if (sbcneed(p,'"')) {
     res=p.substr(0,pos=(int)p.find_first_of('"'));
-    if (pos==string::npos) error1("No closing '\"'");
+    if (pos==(int)string::npos) error1("No closing '\"'");
     else ++pos;
   } else if (p[0]=='<') {
     res=p.substr(0,pos=(int)p.find_first_of('>'));
-    if (pos==string::npos) error1("No closing '>'");
+    if (pos==(int)string::npos) error1("No closing '>'");
     else ++pos;
   } else {
     res=p.substr(0,pos=(int)p.find_first_of(','));
   }
-  if (pos==string::npos) p.clear(); else p=p.substr(pos);
+  if (pos==(int)string::npos) p.clear(); else p=p.substr(pos);
   for (istring i=res.begin(); i!=res.end(); ++i) if (*i==BADSLASH) *i=SLASH;
   return res;
 }

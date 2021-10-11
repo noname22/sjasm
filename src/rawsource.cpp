@@ -121,7 +121,8 @@ StringList RawSource::ReadUntil(StringList lnest, StringList lend, string unex) 
 
 string RawSource::_KillComments() {
   char ochar=listopt._char;
-  unsigned pos,af=0;
+  int pos;
+  unsigned af=0;
   string res="";
   istring p,op;
 
@@ -184,7 +185,7 @@ string RawSource::_KillComments() {
       ++p;
     }
 
-    pos=(int)res.find_last_not_of(' '); if (pos!=string::npos) res.erase(pos+1);
+    pos=(int)res.find_last_not_of(' '); if (pos!=(int)string::npos) res.erase(pos+1);
     pos=(int)res.length();
 
     if (pos && res[pos-1]=='\\') {
@@ -229,11 +230,11 @@ void RawSource::_Group2(string &line) {
 
 void RawSource::_CutLines(string &line) {
   string res="";
-  unsigned pos;
+  int pos;
   while ('o') {
     pos=(int)line.find_first_of("\\\"'");
     if (pos) res+=line.substr(0,pos);
-    if (pos==string::npos) break;
+    if (pos==(int)string::npos) break;
     line=line.substr(pos);
     if (line[0]=='\\') {
       _Parse(res);
@@ -270,7 +271,7 @@ int RawSource::_ParseLabel(string &line) {
     else if (need(line,".@")) {
       do {
         int loc=(int)mlp.find_last_of('.');
-        if (loc!=string::npos) mlp=mlp.substr(0,loc);
+        if (loc!=(int)string::npos) mlp=mlp.substr(0,loc);
         else { mlp.clear(); /*error("No nested macro");*/ break; }
       } while (cneed(line,'@'));
       line='.'+line;
@@ -281,7 +282,7 @@ int RawSource::_ParseLabel(string &line) {
   }
   if (!isalpha(line[0]) && line[0]!='.' && line[0]!='_') { error("Illegal label name"); return 0; }
   pos=findlabelchar.findnot(line);
-  n=line.substr(0,pos); if (pos!=string::npos) line=line.substr(pos); else line.clear();
+  n=line.substr(0,pos); if (pos!=(int)string::npos) line=line.substr(pos); else line.clear();
   if (line[0]==':' && line[1]!='=') line.erase(0,1);
   if (!mlp.empty() && n[0]=='.') n=mlp+'>'+n.substr(1);
   else {
@@ -339,7 +340,7 @@ int RawSource::_ParseLabel(string &line) {
 void RawSource::_ParseRepeat(string &line) {
   if (sbcneed(line,'[')) {
     int p=(int)line.find_first_of(']');
-    if (p==string::npos) { error("] expected"); return; }
+    if (p==(int)string::npos) { error("] expected"); return; }
     RSRepeat *rsr=new RSRepeat;
     string count=line.substr(0,p);
     line.erase(0,p+1);

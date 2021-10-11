@@ -79,7 +79,7 @@ string ReplaceDefines(string s) {
   for(;;) {
     pos=frepdef.find(s);
     if (pos) res+=s.substr(0,pos);
-    if (pos==string::npos) break;
+    if (pos==(int)string::npos) break;
     s=s.substr(pos);
     if (s[0]=='_' || isalpha(s[0])) {
       nid=getid(s);
@@ -135,7 +135,7 @@ string ReplaceDefines(string s) {
   for(;;) {
     pos=fmacfun.find(s);
     if (pos) res+=s.substr(0,pos);
-    if (pos==string::npos) break;
+    if (pos==(int)string::npos) break;
     s=s.substr(pos);
     nid=getid(s);
     if (s[0]=='(') nr=getmacrofun(nid,s);
@@ -147,14 +147,14 @@ string ReplaceDefines(string s) {
   for(;;) {
     pos=(int)res.find_first_of("'\">");
     if (pos) r+=res.substr(0,pos);
-    if (pos==string::npos) break;
+    if (pos==(int)string::npos) break;
     res=res.substr(pos);
     if (res[0]=='\'' || res[0]=='"') {
       pos=getstringlength(res);
       r+=res.substr(0,pos); res=res.substr(pos);
     } else if (res[0]=='>' && res[1]=='<') {
       pos=(int)r.find_last_not_of(' ');
-      if (pos!=string::npos) r.erase(pos+1);
+      if (pos!=(int)string::npos) r.erase(pos+1);
       res=res.substr(2); skipblanks(res);
     } else {
       r+='>'; res.erase(0,1);

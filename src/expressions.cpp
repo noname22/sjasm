@@ -41,7 +41,7 @@ int getLabelValue(string &ns, int &nval, int &npag) {
     else if (need(s,".@")) {
       do {
         loc=(int)mlp.find_last_of('.');
-        if (loc!=string::npos) mlp=mlp.substr(0,loc);
+        if (loc!=(int)string::npos) mlp=mlp.substr(0,loc);
         else { mlp.clear(); /*error("No nested macro");*/ break; } // bug! .@.label wordt .label (moet ..label zijn)
       } while (cneed(s,'@'));
       loc=1;
@@ -52,14 +52,14 @@ int getLabelValue(string &ns, int &nval, int &npag) {
   pos=findlabelchar.findnot(s);
   n=s.substr(0,pos);
   if (!isalpha(n[0]) && n[0]!='.' && n[0]!='_') { error("Illegal label name",s); return 0; }
-  if (pos!=string::npos) s=s.substr(pos); else s.clear();
+  if (pos!=(int)string::npos) s=s.substr(pos); else s.clear();
   ns=s;
 
   if (!mlp.empty() && loc) { 
     while(1) {
       if (labtab.getvalue(mlp+'>'+n,nval,npag)) return 1;
       loc=(int)mlp.find_last_of('.');
-        if (loc!=string::npos) mlp=mlp.substr(0,loc); else break;
+        if (loc!=(int)string::npos) mlp=mlp.substr(0,loc); else break;
     }
     loc=1;
   }
@@ -92,7 +92,7 @@ int getval(string &p, int &nval, unsigned int base, int len) {
       else { len=0; v=(unsigned)-1; --pos; }
       break;
     }
-    if (v!=-1) {
+    if (v!=(unsigned)-1) {
       if (v>base) { error("Digit not in base",p); return 0; }
       ov=nv; nv=nv*base+v;
       if (ov>nv) error("Overflow");
@@ -122,7 +122,7 @@ int getConstant(string &p, int &nval) {
     }
   default:
     pos=findconstantchar.findnot(p);
-    if (pos==string::npos) pos=(int)p.length();
+    if (pos==(int)string::npos) pos=(int)p.length();
     c=p[pos-1];
     if (c=='b' || c=='B') { base=2; --pos; }
     if (c=='h' || c=='H') { base=16; --pos; }
